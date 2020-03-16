@@ -25,8 +25,8 @@ public class SimpleBuzonDAO implements IBuzonDAO{
 	
 		
 	@Override
-	public Iterable<Buzon> buscarBuzonesPorUsuarioId(Long usuarioId) {
-		Iterable<Buzon> buzones = simplebuzonrepository.findBuzonesByUsuarioId(usuarioId);		
+	public List<Buzon> buscarBuzonesPorUsuarioId(Long usuarioId) {
+		List<Buzon> buzones = simplebuzonrepository.findBuzonesByUsuarioId(usuarioId);		
 		return buzones;
 	}
 	
@@ -36,16 +36,14 @@ public class SimpleBuzonDAO implements IBuzonDAO{
 		List<Buzon> buzones = (List<Buzon>) simplebuzonrepository.findByUbicacionIdIn(ubicacionesIds);
 		return buzones;
 	}
-	
-	
-	/*
+
+
 	@Override
-	public Buzon crearBuzon(Long buzonId) {
-		Buzon buzon = new Buzon();
-		Buzon buzonc = simplebuzonrepository.save(buzon);
-		return buzonc;
+	public Buzon registrarBuzon(Buzon buzon) {
+		return simplebuzonrepository.save(buzon);
 	}
-	*/
+	
+	
 	
 
 	

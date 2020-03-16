@@ -1,7 +1,6 @@
 package com.exact.buzon.service;
 
 import java.util.List;
-
 import com.exact.buzon.dao.IBuzonDAO;
 import com.exact.buzon.entity.Buzon;
 
@@ -20,8 +19,8 @@ public class BuzonService {
 	}	
 	
 	
-	public Iterable<Buzon> buscarBuzonesPorUsuarioId(Long usuarioId){
-		Iterable<Buzon> buzones = buzondao.buscarBuzonesPorUsuarioId(usuarioId);
+	public List<Buzon> buscarBuzonesPorUsuarioId(Long usuarioId){
+		List<Buzon> buzones = buzondao.buscarBuzonesPorUsuarioId(usuarioId);
 		return buzones;
 	}
 	

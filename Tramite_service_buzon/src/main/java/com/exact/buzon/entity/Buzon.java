@@ -20,12 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="buzon")
 public class Buzon implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -115,6 +109,12 @@ public class Buzon implements Serializable {
 	public void setUbicacionNombre(String ubicacionNombre) {		
 		this.ubicacionNombre = ubicacionNombre;
 	}
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 
 	
 	

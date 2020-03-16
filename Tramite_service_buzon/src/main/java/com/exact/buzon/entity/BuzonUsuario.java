@@ -12,7 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
+@Data
 @Table(name="buzon_usuario")
 public class BuzonUsuario implements Serializable{
 	
@@ -33,30 +36,9 @@ public class BuzonUsuario implements Serializable{
 	@Column(name="usuario_id")
 	private Long usuarioId;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Buzon getBuzon() {
-		return buzon;
-	}
-
-	public void setBuzon(Buzon buzon) {
-		this.buzon = buzon;
-	}
-
-	public Long getUsuarioId() {
-		return usuarioId;
-	}
-
-	public void setUsuarioId(Long usuarioId) {
+	BuzonUsuario(Long usuarioId){
 		this.usuarioId = usuarioId;
 	}
-
 	
 
 }

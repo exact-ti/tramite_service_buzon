@@ -25,7 +25,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 
+import com.exact.buzon.auth.UserAuthenticated;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Claims;
@@ -38,6 +40,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	
 	private String key;
 	Properties properties;
+	
+	private AntPathMatcher pathMatcher = new AntPathMatcher();
 
 	
 	public JWTAuthorizationFilter(AuthenticationManager authenticationManager) throws IOException {
@@ -49,6 +53,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	}
 	
 	
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+		return pathMatcher.match("/h2-console*", request.getServletPath()); 
+	}
+
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -84,9 +94,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		}
 
 		UsernamePasswordAuthenticationToken authentication = null;
-		Long usuarioId = Long.valueOf(claims.get("id").toString());
-		Map<String, Object> datosUsuario = new HashMap<String, Object>();
-		datosUsuario.put("id", usuarioId);
+		String usuarioId = claims.get("id").toString();
+		String nombres = claims.get("nombre").toString();
+		String correo = claims.get("correo").toString();
+		
+		UserAuthenticated userAuthenticated = new UserAuthenticated(usuarioId, nombres, correo);
+		
 		Object authoritiesJson = claims.get("authorities");
 		Collection<GrantedAuthority> authorities = new ArrayList<>();
 		
@@ -95,7 +108,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			authorities.add(grantedAuthority);
 		});
 		
-		authentication = new UsernamePasswordAuthenticationToken(datosUsuario, null, authorities);		
+		authentication = new UsernamePasswordAuthenticationToken(userAuthenticated, null, authorities);		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		super.doFilterInternal(request, response, chain);
 	}

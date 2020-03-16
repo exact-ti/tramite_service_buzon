@@ -1,6 +1,5 @@
 package com.exact.buzon.controller;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -11,12 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exact.buzon.auth.UserAuthenticated;
 import com.exact.buzon.dao.IBuzonDAO;
 import com.exact.buzon.entity.Buzon;
 import com.exact.buzon.service.BuzonService;
@@ -46,9 +44,9 @@ public class BuzonController {
 
 	@GetMapping
 	public ResponseEntity<Iterable<Buzon>> buscarBuzonesPorUsuarioId(Authentication authentication){			
-		@SuppressWarnings("unchecked")
-		Map<String, Object> datosUsuario = (Map<String, Object>) authentication.getPrincipal();
-		Long id = Long.valueOf(datosUsuario.get("id").toString());		
+		
+		UserAuthenticated usuario = (UserAuthenticated) authentication.getPrincipal();
+		Long id = Long.valueOf(usuario.getName());		
 		buzonservice = new BuzonService(buzondao);
 		return new ResponseEntity<Iterable<Buzon>>(buzonservice.buscarBuzonesPorUsuarioId(id), HttpStatus.OK);
 	}		
