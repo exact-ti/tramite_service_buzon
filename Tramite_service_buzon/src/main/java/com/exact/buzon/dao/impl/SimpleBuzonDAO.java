@@ -1,4 +1,4 @@
-package com.exact.buzon.dao;
+package com.exact.buzon.dao.impl;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.exact.buzon.dao.IBuzonDAO;
 import com.exact.buzon.entity.Buzon;
 import com.exact.buzon.repository.ISimpleBuzonRepository;
 
