@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exact.buzon.dao.IAreaDAO;
 import com.exact.buzon.dao.IBuzonDAO;
+import com.exact.buzon.dao.IEnvioDAO;
+import com.exact.buzon.dto.DestinatarioFrecuenteDTO;
 import com.exact.buzon.entity.Buzon;
 import com.exact.buzon.service.BuzonService;
 import com.exact.commons.auth.UserAuthenticated;
@@ -24,17 +27,23 @@ import com.exact.commons.auth.UserAuthenticated;
 public class BuzonController {
 
 	@Autowired
-	@Qualifier("simpleBuzonDAO")
-	IBuzonDAO buzondao;
-
-	// FALTA EL AUTENTICATION //POR CONFIRMAR QUE SE VA A USAR
+	@Qualifier("SimpleBuzonDAO")
+	IBuzonDAO simpleBuzonDAO;
+	
+	@Autowired
+	@Qualifier("RESTEnvioDAO")
+	IEnvioDAO restEnvioDAO;
+	
+	@Autowired
+	@Qualifier("RESTAreaDAO")
+	IAreaDAO restAreaDAO;
 
 	BuzonService buzonservice;
 
 	@GetMapping("/{textoo}")
 	public ResponseEntity<Iterable<Buzon>> buscarBuzon(@PathVariable String textoo) {
 		String texto = textoo;
-		buzonservice = new BuzonService(buzondao);
+		buzonservice = new BuzonService(simpleBuzonDAO);
 		return new ResponseEntity<Iterable<Buzon>>(buzonservice.buscarBuzonPorNombre(texto), HttpStatus.OK);
 	}
 
@@ -43,27 +52,20 @@ public class BuzonController {
 
 		UserAuthenticated usuario = (UserAuthenticated) authentication.getPrincipal();
 		Long id = Long.valueOf(usuario.getName());
-		buzonservice = new BuzonService(buzondao);
+		buzonservice = new BuzonService(simpleBuzonDAO);
 		return new ResponseEntity<Iterable<Buzon>>(buzonservice.buscarBuzonesPorUsuarioId(id), HttpStatus.OK);
 	}
 
 	@GetMapping(params = "ids")
 	public ResponseEntity<List<Buzon>> buscarBuzonesPorUbicacionesIds(@RequestParam("ids") List<Long> ubicacionesIds) {
-		buzonservice = new BuzonService(buzondao);
+		buzonservice = new BuzonService(simpleBuzonDAO);
 		return new ResponseEntity<List<Buzon>>(buzonservice.buscarBuzonesPorUbicacionesIds(ubicacionesIds),
 				HttpStatus.OK);
 	}
 
-	// @GetMapping("/{id}/destinatariosfrecuentes")
-//	public ResponseEntity<List<Buzon>> 
-
-	/*
-	 * //CREAR UN BUZON
-	 * 
-	 * @PostMapping public ResponseEntity<Buzon> crearNuevoBuzon(@RequestBody Buzon
-	 * buzon){ try { return new ResponseEntity<>(buzonservice.crearBuzon(buzon),
-	 * HttpStatus.OK); } catch (Exception e) { return new
-	 * ResponseEntity<>(HttpStatus.BAD_REQUEST); } }
-	 */
-
+	@GetMapping("/{id}/destinatariosfrecuentes")
+	public ResponseEntity<List<DestinatarioFrecuenteDTO>> listarDestinatariosFrecuentes(@PathVariable("id") Long id, @RequestParam("cantidad") int cantidad){
+		buzonservice = new BuzonService(simpleBuzonDAO, restEnvioDAO, restAreaDAO);
+		return new ResponseEntity<List<DestinatarioFrecuenteDTO>>(buzonservice.listarDestinatariosFrecuentes(id, cantidad), HttpStatus.OK);
+	}
 }

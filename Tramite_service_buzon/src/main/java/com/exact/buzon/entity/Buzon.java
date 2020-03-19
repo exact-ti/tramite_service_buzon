@@ -17,8 +17,11 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Data;
+
 @Entity
 @Table(name="buzon")
+@Data
 public class Buzon implements Serializable {
 
 	@Id
@@ -33,82 +36,14 @@ public class Buzon implements Serializable {
 	@JoinColumn(name="tipo_buzon_id")
 	private TipoBuzon tipoBuzon;
 	
-	@Column(name="ubicacion_id")
+	@Column(name="ubicacion_codigo")
 	@JsonIgnore
-	private Long ubicacionId;
-	
-	
-	@Column(name="ubicacion_nombre", nullable=false, length = 100)
-	@JsonIgnore
-	private String ubicacionNombre;
-	
-	@Transient
-	private Map<String, Object> ubicacion;
+	private String ubicacionCodigo;
 	
 	
 
 
-	public Map<String, Object> getUbicacion() {
-		ubicacion = new HashMap<String, Object>();
-		this.ubicacion.put("id", ubicacionId);
-		this.ubicacion.put("nombre", ubicacionNombre);
-		return ubicacion;
-	}
-
-
-	public void setUbicacion(Map<String, Object> ubicacion) {
-		this.ubicacion = ubicacion;
-	}
-
-
-	public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-
-	public TipoBuzon getTipoBuzon() {
-		return tipoBuzon;
-	}
-
-
-	public void setTipoBuzon(TipoBuzon tipoBuzon) {
-		this.tipoBuzon = tipoBuzon;
-	}
-
-
-	public Long getUbicacionId() {
-		return ubicacionId;
-	}
-
-
-	public void setUbicacionId(Long ubicacionId) {		
-		this.ubicacionId = ubicacionId;
-	}
-
-
-	public String getUbicacionNombre() {
-		return ubicacionNombre;
-	}
-
-
-	public void setUbicacionNombre(String ubicacionNombre) {		
-		this.ubicacionNombre = ubicacionNombre;
-	}
+	
 	
 	/**
 	 * 
