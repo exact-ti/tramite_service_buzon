@@ -1,6 +1,7 @@
 package com.exact.buzon.enums;
 
 public enum TipoBuzonEnum {
+	
 	PERSONAL(1),
 	GENERICO(2);	
 	
