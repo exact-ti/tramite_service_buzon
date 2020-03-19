@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 
+
 @Component
 public class FeignClientInterceptor implements RequestInterceptor {
 	

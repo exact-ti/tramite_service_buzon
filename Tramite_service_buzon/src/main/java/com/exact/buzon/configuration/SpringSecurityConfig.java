@@ -12,9 +12,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.exact.buzon.filter.JWTAuthorizationFilter;
-
-
+import com.exact.commons.filter.JWTAuthorizationFilter;
 
 
 
@@ -25,7 +23,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.addFilter(new JWTAuthorizationFilter(authenticationManager())).csrf().disable().sessionManagement()
+		http.authorizeRequests().antMatchers("/h2-console*").anonymous()
+		.and().headers().frameOptions().sameOrigin()
+		.and().addFilter(new JWTAuthorizationFilter(authenticationManager())).csrf().disable().sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors();
 	}	
 	

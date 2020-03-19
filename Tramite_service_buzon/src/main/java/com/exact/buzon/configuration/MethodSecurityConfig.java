@@ -13,6 +13,6 @@ import org.springframework.security.config.core.GrantedAuthorityDefaults;
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 	@Bean
 	GrantedAuthorityDefaults grantedAuthorityDefaults() {
-	    return new GrantedAuthorityDefaults(""); // Remove the ROLE_ prefix
+	    return new GrantedAuthorityDefaults("");
 	}
 }
