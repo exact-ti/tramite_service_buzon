@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.exact.buzon.dao.IAreaDAO;
 import com.exact.buzon.dao.IBuzonDAO;
 import com.exact.buzon.dao.IEnvioDAO;
-import com.exact.buzon.dto.DestinatarioDTO;
+import com.exact.buzon.dto.BuzonDTO;
 import com.exact.buzon.entity.Buzon;
 import com.exact.buzon.service.BuzonService;
 import com.exact.commons.auth.UserAuthenticated;
@@ -41,18 +41,18 @@ public class BuzonController {
 	BuzonService buzonService;
 
 	@GetMapping(params = "filtro")
-	public ResponseEntity<Iterable<DestinatarioDTO>> buscarBuzonesPorNombre(@RequestParam String filtro) {
+	public ResponseEntity<Iterable<BuzonDTO>> buscarBuzonesPorNombre(@RequestParam String filtro) {
 		buzonService = new BuzonService(simpleBuzonDAO, restEnvioDAO, restAreaDAO);
-		return new ResponseEntity<Iterable<DestinatarioDTO>>(buzonService.buscarBuzonPorNombre(filtro), HttpStatus.OK);
+		return new ResponseEntity<Iterable<BuzonDTO>>(buzonService.buscarBuzonPorNombre(filtro), HttpStatus.OK);
 	}
 
 	@GetMapping
-	public ResponseEntity<Iterable<Buzon>> buscarBuzonesPorUsuarioId(Authentication authentication) {
+	public ResponseEntity<Iterable<BuzonDTO>> buscarBuzonesPorUsuarioId(Authentication authentication) {
 
 		UserAuthenticated usuario = (UserAuthenticated) authentication.getPrincipal();
 		Long id = Long.valueOf(usuario.getName());
 		buzonService = new BuzonService(simpleBuzonDAO);
-		return new ResponseEntity<Iterable<Buzon>>(buzonService.buscarBuzonesPorUsuarioId(id), HttpStatus.OK);
+		return new ResponseEntity<Iterable<BuzonDTO>>(buzonService.buscarBuzonesPorUsuarioId(id), HttpStatus.OK);
 	}
 
 	@GetMapping(params = "codigosUbicaciones")
@@ -63,8 +63,8 @@ public class BuzonController {
 	}
 
 	@GetMapping("/{id}/destinatariosfrecuentes")
-	public ResponseEntity<List<DestinatarioDTO>> listarDestinatariosFrecuentes(@PathVariable("id") Long id, @RequestParam("cantidad") int cantidad){
+	public ResponseEntity<List<BuzonDTO>> listarDestinatariosFrecuentes(@PathVariable("id") Long id, @RequestParam("cantidad") int cantidad){
 		buzonService = new BuzonService(simpleBuzonDAO, restEnvioDAO, restAreaDAO);
-		return new ResponseEntity<List<DestinatarioDTO>>(buzonService.listarDestinatariosFrecuentes(id, cantidad), HttpStatus.OK);
+		return new ResponseEntity<List<BuzonDTO>>(buzonService.listarDestinatariosFrecuentes(id, cantidad), HttpStatus.OK);
 	}
 }

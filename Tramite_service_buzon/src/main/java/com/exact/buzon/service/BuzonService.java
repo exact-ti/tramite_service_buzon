@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.exact.buzon.dao.IAreaDAO;
 import com.exact.buzon.dao.IBuzonDAO;
 import com.exact.buzon.dao.IEnvioDAO;
-import com.exact.buzon.dto.DestinatarioDTO;
+import com.exact.buzon.dto.BuzonDTO;
 import com.exact.buzon.entity.Buzon;
 
 public class BuzonService {
@@ -29,14 +29,14 @@ public class BuzonService {
 		this.areaDAO = areaDAO;
 	}
 
-	public List<DestinatarioDTO> buscarBuzonPorNombre(String texto) {
+	public List<BuzonDTO> buscarBuzonPorNombre(String texto) {
 		List<Buzon> buzones = buzonDAO.buscarBuzonPorNombre(texto.toUpperCase());
 		return agregarAreaYSedeABuzon(buzones);
 	}
 
-	public List<Buzon> buscarBuzonesPorUsuarioId(Long usuarioId) {
+	public List<BuzonDTO> buscarBuzonesPorUsuarioId(Long usuarioId) {
 		List<Buzon> buzones = buzonDAO.buscarBuzonesPorUsuarioId(usuarioId);
-		return buzones;
+		return agregarAreaYSedeABuzon(buzones);
 	}
 
 	public List<Buzon> listarBuzonesPorCodigosUbicaciones(List<String> codigosUbicaciones) {
@@ -44,7 +44,7 @@ public class BuzonService {
 		return buzones;
 	}
 
-	public List<DestinatarioDTO> listarDestinatariosFrecuentes(Long buzonId, int cantidad) {
+	public List<BuzonDTO> listarDestinatariosFrecuentes(Long buzonId, int cantidad) {
 		List<Long> destinatariosIds = envioDAO.listarPrimerosDestinatariosIdsPorRemitenteId(buzonId, cantidad);
 		List<Buzon> buzones = buzonDAO.listarBuzonesPorIds(destinatariosIds);
 		return agregarAreaYSedeABuzon(buzones);
@@ -53,11 +53,11 @@ public class BuzonService {
 
 	/* **************************************** */
 
-	public List<DestinatarioDTO> agregarAreaYSedeABuzon(List<Buzon> buzones) {
+	public List<BuzonDTO> agregarAreaYSedeABuzon(List<Buzon> buzones) {
 		if (buzones.size() == 0) {
-			return new ArrayList<DestinatarioDTO>();
+			return new ArrayList<BuzonDTO>();
 		}
-		List<DestinatarioDTO> destinatariosFrecuentesDtOs = new ArrayList<DestinatarioDTO>();
+		List<BuzonDTO> destinatariosFrecuentesDtOs = new ArrayList<BuzonDTO>();
 		List<String> codigosUbicaciones = buzones.stream().map(buzon -> buzon.getCodigoUbicacion())
 				.collect(Collectors.toList());
 		List<Map<String, Object>> areas = areaDAO.listarAreasByCodigosUbicaciones(codigosUbicaciones);
@@ -71,7 +71,7 @@ public class BuzonService {
 			if (!buzon.getCodigoUbicacion().equals(area.get("codigo"))) {
 				j++;
 			} else {
-				DestinatarioDTO dto = new DestinatarioDTO(buzon, area.get("nombre").toString(),
+				BuzonDTO dto = new BuzonDTO(buzon, area.get("nombre").toString(),
 						area.get("sede").toString());
 				destinatariosFrecuentesDtOs.add(dto);
 				i++;
