@@ -8,8 +8,8 @@ public interface IBuzonDAO {
 	
 	List<Buzon> buscarBuzonPorNombre(String texto);		
 	List<Buzon> buscarBuzonesPorUsuarioId(Long usuarioId);	
-	List<Buzon> buscarBuzonesPorUbicacionesIds(List<Long> ubicacionesIds);
 	Buzon registrarBuzon(Buzon buzon);
 	List<Buzon> listarBuzonesPorIds(List<Long> ids);
+	List<Buzon> listarBuzonesPorCodigosUbicaciones(List<String> codigosUbicaciones);
 
 }

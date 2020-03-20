@@ -13,11 +13,9 @@ public interface ISimpleBuzonRepository extends CrudRepository<Buzon, Long> {
 
 	public List<Buzon> findBuzonesByNombreContaining(String texto);
 	
-	@Query(value="Select * from buzon b where b.buzon_id = ?1", nativeQuery = true)
 	public List<Buzon> findBuzonesByUsuarioId(Long usuarioId);
 	
-	//CrudRepository -> findByUbicacionIdIn (método del CrudRepository que busca una lista de ids separadas por comas que no sean la id de la misma tabla)
-	public List<Buzon> findByUbicacionCodigoIn(List<Long> ubicacionesIds);
+	public List<Buzon> findByUbicacionCodigoIn(List<String> codigosUbicaciones);
 	
 	
 	//CrudRepository -> save

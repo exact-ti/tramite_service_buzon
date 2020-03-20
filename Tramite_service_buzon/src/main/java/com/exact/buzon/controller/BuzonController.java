@@ -55,10 +55,10 @@ public class BuzonController {
 		return new ResponseEntity<Iterable<Buzon>>(buzonService.buscarBuzonesPorUsuarioId(id), HttpStatus.OK);
 	}
 
-	@GetMapping(params = "ids")
-	public ResponseEntity<List<Buzon>> buscarBuzonesPorUbicacionesIds(@RequestParam("ids") List<Long> ubicacionesIds) {
+	@GetMapping(params = "codigosUbicaciones")
+	public ResponseEntity<List<Buzon>> listarBuzonesPorCodigosUbicaciones(@RequestParam("codigosUbicaciones") List<String> codigosUbicaciones) {
 		buzonService = new BuzonService(simpleBuzonDAO);
-		return new ResponseEntity<List<Buzon>>(buzonService.buscarBuzonesPorUbicacionesIds(ubicacionesIds),
+		return new ResponseEntity<List<Buzon>>(buzonService.listarBuzonesPorCodigosUbicaciones(codigosUbicaciones),
 				HttpStatus.OK);
 	}
 

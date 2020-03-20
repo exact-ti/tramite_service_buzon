@@ -39,8 +39,8 @@ public class BuzonService {
 		return buzones;
 	}
 
-	public List<Buzon> buscarBuzonesPorUbicacionesIds(List<Long> ubicacionesIds) {
-		List<Buzon> buzones = buzonDAO.buscarBuzonesPorUbicacionesIds(ubicacionesIds);
+	public List<Buzon> listarBuzonesPorCodigosUbicaciones(List<String> codigosUbicaciones) {
+		List<Buzon> buzones = buzonDAO.listarBuzonesPorCodigosUbicaciones(codigosUbicaciones);
 		return buzones;
 	}
 
@@ -58,17 +58,17 @@ public class BuzonService {
 			return new ArrayList<DestinatarioDTO>();
 		}
 		List<DestinatarioDTO> destinatariosFrecuentesDtOs = new ArrayList<DestinatarioDTO>();
-		List<String> codigosUbicaciones = buzones.stream().map(buzon -> buzon.getUbicacionCodigo())
+		List<String> codigosUbicaciones = buzones.stream().map(buzon -> buzon.getCodigoUbicacion())
 				.collect(Collectors.toList());
 		List<Map<String, Object>> areas = areaDAO.listarAreasByCodigosUbicaciones(codigosUbicaciones);
 		areas.sort((a, b) -> a.get("codigo").toString().compareTo(b.get("codigo").toString()));
-		buzones.sort((a, b) -> a.getUbicacionCodigo().compareTo(b.getUbicacionCodigo()));
+		buzones.sort((a, b) -> a.getCodigoUbicacion().compareTo(b.getCodigoUbicacion()));
 		int i = 0;
 		int j = 0;
 		while (i < buzones.size()) {
 			Buzon buzon = buzones.get(i);
 			Map<String, Object> area = areas.get(j);
-			if (!buzon.getUbicacionCodigo().equals(area.get("codigo"))) {
+			if (!buzon.getCodigoUbicacion().equals(area.get("codigo"))) {
 				j++;
 			} else {
 				DestinatarioDTO dto = new DestinatarioDTO(buzon, area.get("nombre").toString(),
