@@ -35,7 +35,7 @@ public class SimpleBuzonDAO implements IBuzonDAO{
 	
 	@Override
 	public List<Buzon> listarBuzonesPorCodigosUbicaciones(List<String> codigosUbicaciones) {
-		List<Buzon> buzones = (List<Buzon>) buzonRepository.findByUbicacionCodigoIn(codigosUbicaciones);
+		List<Buzon> buzones = (List<Buzon>) buzonRepository.findByCodigoUbicacionIn(codigosUbicaciones);
 		return buzones;
 	}
 

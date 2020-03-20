@@ -36,7 +36,7 @@ public class Buzon implements Serializable {
 	@JoinColumn(name="tipo_buzon_id")
 	private TipoBuzon tipoBuzon;
 	
-	@Column(name="codigoUbicacion")
+	@Column(name="codigo_ubicacion")
 	private String codigoUbicacion;
 	
 	
