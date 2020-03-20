@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.exact.buzon.dao.IAreaDAO;
 import com.exact.buzon.dao.IBuzonDAO;
 import com.exact.buzon.dao.IEnvioDAO;
-import com.exact.buzon.dto.DestinatarioFrecuenteDTO;
+import com.exact.buzon.dto.DestinatarioDTO;
 import com.exact.buzon.entity.Buzon;
 
 public class BuzonService {
@@ -29,9 +29,9 @@ public class BuzonService {
 		this.areaDAO = areaDAO;
 	}
 
-	public Iterable<Buzon> buscarBuzonPorNombre(String texto) {
-		Iterable<Buzon> buzones = buzonDAO.buscarBuzonPorNombre(texto);
-		return buzones;
+	public List<DestinatarioDTO> buscarBuzonPorNombre(String texto) {
+		List<Buzon> buzones = buzonDAO.buscarBuzonPorNombre(texto.toUpperCase());
+		return agregarAreaYSedeABuzon(buzones);
 	}
 
 	public List<Buzon> buscarBuzonesPorUsuarioId(Long usuarioId) {
@@ -44,13 +44,23 @@ public class BuzonService {
 		return buzones;
 	}
 
-	public List<DestinatarioFrecuenteDTO> listarDestinatariosFrecuentes(Long buzonId, int cantidad) {
-		List<DestinatarioFrecuenteDTO> destinatariosFrecuentesDtOs = new ArrayList<DestinatarioFrecuenteDTO>();
+	public List<DestinatarioDTO> listarDestinatariosFrecuentes(Long buzonId, int cantidad) {
 		List<Long> destinatariosIds = envioDAO.listarPrimerosDestinatariosIdsPorRemitenteId(buzonId, cantidad);
 		List<Buzon> buzones = buzonDAO.listarBuzonesPorIds(destinatariosIds);
-		
-		List<Map<String, Object>> areas = areaDAO.listarAreasByCodigosUbicaciones(
-				buzones.stream().map(buzon -> buzon.getUbicacionCodigo()).collect(Collectors.toList()));
+		return agregarAreaYSedeABuzon(buzones);
+
+	}
+
+	/* **************************************** */
+
+	public List<DestinatarioDTO> agregarAreaYSedeABuzon(List<Buzon> buzones) {
+		if (buzones.size() == 0) {
+			return new ArrayList<DestinatarioDTO>();
+		}
+		List<DestinatarioDTO> destinatariosFrecuentesDtOs = new ArrayList<DestinatarioDTO>();
+		List<String> codigosUbicaciones = buzones.stream().map(buzon -> buzon.getUbicacionCodigo())
+				.collect(Collectors.toList());
+		List<Map<String, Object>> areas = areaDAO.listarAreasByCodigosUbicaciones(codigosUbicaciones);
 		areas.sort((a, b) -> a.get("codigo").toString().compareTo(b.get("codigo").toString()));
 		buzones.sort((a, b) -> a.getUbicacionCodigo().compareTo(b.getUbicacionCodigo()));
 		int i = 0;
@@ -61,7 +71,7 @@ public class BuzonService {
 			if (!buzon.getUbicacionCodigo().equals(area.get("codigo"))) {
 				j++;
 			} else {
-				DestinatarioFrecuenteDTO dto = new DestinatarioFrecuenteDTO(buzon, area.get("nombre").toString(),
+				DestinatarioDTO dto = new DestinatarioDTO(buzon, area.get("nombre").toString(),
 						area.get("sede").toString());
 				destinatariosFrecuentesDtOs.add(dto);
 				i++;
@@ -69,7 +79,5 @@ public class BuzonService {
 		}
 		return destinatariosFrecuentesDtOs;
 	}
-
-	/* **************************************** */
 
 }

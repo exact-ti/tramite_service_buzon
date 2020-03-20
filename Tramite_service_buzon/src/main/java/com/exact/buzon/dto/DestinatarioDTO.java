@@ -9,14 +9,14 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class DestinatarioFrecuenteDTO implements Serializable {
+public class DestinatarioDTO implements Serializable {
 	
 	private Long id;
 	private String nombre;
 	private String area;
 	private String sede;
 	
-	public DestinatarioFrecuenteDTO(Buzon buzon, String area, String sede) {
+	public DestinatarioDTO(Buzon buzon, String area, String sede) {
 		this.id = buzon.getId();
 		this.nombre = buzon.getNombre();
 		this.area = area;

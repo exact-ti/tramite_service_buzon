@@ -11,8 +11,7 @@ import com.exact.buzon.entity.Buzon;
 @Repository
 public interface ISimpleBuzonRepository extends CrudRepository<Buzon, Long> {
 
-	@Query(value="Select * From buzon where nombre like '%' + ?1 + '%'", nativeQuery=true)
-	public Iterable<Buzon> findBuzonesByNombre(String texto);
+	public List<Buzon> findBuzonesByNombreContaining(String texto);
 	
 	@Query(value="Select * from buzon b where b.buzon_id = ?1", nativeQuery = true)
 	public List<Buzon> findBuzonesByUsuarioId(Long usuarioId);

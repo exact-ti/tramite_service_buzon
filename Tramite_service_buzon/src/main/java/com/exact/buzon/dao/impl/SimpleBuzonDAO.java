@@ -19,8 +19,8 @@ public class SimpleBuzonDAO implements IBuzonDAO{
 	
 	
 	@Override
-	public Iterable<Buzon> buscarBuzonPorNombre(String texto) {
-		Iterable<Buzon> buzones = buzonRepository.findBuzonesByNombre(texto);
+	public List<Buzon> buscarBuzonPorNombre(String texto) {
+		List<Buzon> buzones = buzonRepository.findBuzonesByNombreContaining(texto);
 		return buzones;
 	}	
 	

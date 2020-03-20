@@ -6,7 +6,7 @@ import com.exact.buzon.entity.Buzon;
 
 public interface IBuzonDAO {
 	
-	Iterable<Buzon> buscarBuzonPorNombre(String texto);		
+	List<Buzon> buscarBuzonPorNombre(String texto);		
 	List<Buzon> buscarBuzonesPorUsuarioId(Long usuarioId);	
 	List<Buzon> buscarBuzonesPorUbicacionesIds(List<Long> ubicacionesIds);
 	Buzon registrarBuzon(Buzon buzon);
