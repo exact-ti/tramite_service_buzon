@@ -47,12 +47,12 @@ public class BuzonController {
 	}
 
 	@GetMapping
-	public ResponseEntity<Iterable<BuzonDTO>> buscarBuzonesPorUsuarioId(Authentication authentication) {
+	public ResponseEntity<Iterable<Buzon>> buscarBuzonesPorUsuarioId(Authentication authentication) {
 
 		UserAuthenticated usuario = (UserAuthenticated) authentication.getPrincipal();
 		Long id = Long.valueOf(usuario.getName());
 		buzonService = new BuzonService(simpleBuzonDAO, restAreaDAO);
-		return new ResponseEntity<Iterable<BuzonDTO>>(buzonService.buscarBuzonesPorUsuarioId(id), HttpStatus.OK);
+		return new ResponseEntity<Iterable<Buzon>>(buzonService.buscarBuzonesPorUsuarioId(id), HttpStatus.OK);
 	}
 
 	@GetMapping(params = "codigosUbicaciones")

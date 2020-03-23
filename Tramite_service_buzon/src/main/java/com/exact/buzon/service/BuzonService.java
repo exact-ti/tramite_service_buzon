@@ -39,9 +39,9 @@ public class BuzonService {
 		return agregarAreaYSedeABuzon(buzones);
 	}
 
-	public List<BuzonDTO> buscarBuzonesPorUsuarioId(Long usuarioId) {
+	public List<Buzon> buscarBuzonesPorUsuarioId(Long usuarioId) {
 		List<Buzon> buzones = buzonDAO.buscarBuzonesPorUsuarioId(usuarioId);
-		return agregarAreaYSedeABuzon(buzones);
+		return buzones;
 	}
 
 	public List<Buzon> listarBuzonesPorCodigosUbicaciones(List<String> codigosUbicaciones) {
