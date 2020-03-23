@@ -51,7 +51,7 @@ public class BuzonController {
 
 		UserAuthenticated usuario = (UserAuthenticated) authentication.getPrincipal();
 		Long id = Long.valueOf(usuario.getName());
-		buzonService = new BuzonService(simpleBuzonDAO);
+		buzonService = new BuzonService(simpleBuzonDAO, restAreaDAO);
 		return new ResponseEntity<Iterable<BuzonDTO>>(buzonService.buscarBuzonesPorUsuarioId(id), HttpStatus.OK);
 	}
 

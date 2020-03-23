@@ -29,6 +29,11 @@ public class BuzonService {
 		this.areaDAO = areaDAO;
 	}
 
+	public BuzonService(IBuzonDAO buzonDAO, IAreaDAO areaDAO) {
+		this.buzonDAO = buzonDAO;
+		this.areaDAO = areaDAO;
+	}
+
 	public List<BuzonDTO> buscarBuzonPorNombre(String texto) {
 		List<Buzon> buzones = buzonDAO.buscarBuzonPorNombre(texto.toUpperCase());
 		return agregarAreaYSedeABuzon(buzones);
