@@ -1,16 +1,27 @@
 
-
+-- CATALOGO --
 INSERT INTO tipo_buzon (nombre) VALUES ('PERSONAL')
 INSERT INTO tipo_buzon (nombre) VALUES ('GENÉRICO')
 
-
-INSERT INTO buzon (nombre, codigo_ubicacion, tipo_buzon_id) VALUES ('ADMINISTRADOR', '515T3M45',  1)
-INSERT INTO buzon (nombre, codigo_ubicacion, tipo_buzon_id) VALUES ('PROGRAMADOR', '515T3M45', 1)
-INSERT INTO buzon (nombre, codigo_ubicacion, tipo_buzon_id) VALUES ('ANALISTA', 'C0M3RC14L', 1)
-INSERT INTO buzon (nombre, codigo_ubicacion, tipo_buzon_id) VALUES ('TI', 'C0M3RC14L', 2)
+-- IMPORT --
 
 
-INSERT INTO buzon_usuario (buzon_usuario_id, usuario_id, buzon_id) VALUES (1, 1, 1)
-INSERT INTO buzon_usuario (buzon_usuario_id, usuario_id, buzon_id) VALUES (2, 1, 2)
-INSERT INTO buzon_usuario (buzon_usuario_id, usuario_id, buzon_id) VALUES (3, 3, 3)
-INSERT INTO buzon_usuario (buzon_usuario_id, usuario_id, buzon_id) VALUES (4, 4, 4)
+INSERT INTO buzon(nombre,codigo_ubicacion,tipo_buzon_id) VALUES('ADMINISTRADOR','C000052',1);
+INSERT INTO buzon(nombre,codigo_ubicacion,tipo_buzon_id) VALUES('Javier Gonzales','C000052',1);
+INSERT INTO buzon(nombre,codigo_ubicacion,tipo_buzon_id) VALUES('Mario Carrasco','C000053',1);
+INSERT INTO buzon(nombre,codigo_ubicacion,tipo_buzon_id) VALUES('Sergio Ramos','C000054',1);
+INSERT INTO buzon(nombre,codigo_ubicacion,tipo_buzon_id) VALUES('Andrea Soto','C000055',1);
+INSERT INTO buzon(nombre,codigo_ubicacion,tipo_buzon_id) VALUES('Luis Flores','C000056',1);
+INSERT INTO buzon(nombre,codigo_ubicacion,tipo_buzon_id) VALUES('Katty Robles','C000057',1);
+INSERT INTO buzon(nombre,codigo_ubicacion,tipo_buzon_id) VALUES('Eduardo Huaman','C000058',1);
+
+
+INSERT INTO buzon_usuario(usuario_id,buzon_id) VALUES(1,1);
+INSERT INTO buzon_usuario(usuario_id,buzon_id) VALUES(2,2);
+INSERT INTO buzon_usuario(usuario_id,buzon_id) VALUES(3,3);
+INSERT INTO buzon_usuario(usuario_id,buzon_id) VALUES(4,4);
+INSERT INTO buzon_usuario(usuario_id,buzon_id) VALUES(5,5);
+INSERT INTO buzon_usuario(usuario_id,buzon_id) VALUES(6,6);
+INSERT INTO buzon_usuario(usuario_id,buzon_id) VALUES(7,7);
+INSERT INTO buzon_usuario(usuario_id,buzon_id) VALUES(8,8);
+
