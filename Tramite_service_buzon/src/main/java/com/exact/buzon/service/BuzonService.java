@@ -55,6 +55,11 @@ public class BuzonService {
 		return agregarAreaYSedeABuzon(buzones);
 
 	}
+	
+	public List<Buzon> listarBuzonesPorIds(List<Long> ids){
+		return buzonDAO.listarBuzonesPorIds(ids);
+	}
+	
 
 	/* **************************************** */
 

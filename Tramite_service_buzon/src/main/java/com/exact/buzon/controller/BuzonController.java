@@ -67,4 +67,11 @@ public class BuzonController {
 		buzonService = new BuzonService(simpleBuzonDAO, restEnvioDAO, restAreaDAO);
 		return new ResponseEntity<List<BuzonDTO>>(buzonService.listarDestinatariosFrecuentes(id, cantidad), HttpStatus.OK);
 	}
+	
+	@GetMapping(params = "ids")
+	public ResponseEntity<List<Buzon>> listarBuzonesPorIds(@RequestParam("ids") List<Long> ids){
+		buzonService = new BuzonService(simpleBuzonDAO);
+		return new ResponseEntity<List<Buzon>>(buzonService.listarBuzonesPorIds(ids), HttpStatus.OK);
+	}
+	
 }
